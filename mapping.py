@@ -11,9 +11,7 @@ file.readline() #reads in line titles
 file.readline()
 file.readline()
 for line in file:
-	clean = re.match('-|from', line, re.I)
+	clean = re.match('(\w+\s+)+(\d+)', line)
 	if clean:
-		print("test")
-	else:
-		print(line)
+		print(clean.group(1))
 file.close()
