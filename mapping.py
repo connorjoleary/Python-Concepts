@@ -9,5 +9,9 @@ file.readline()
 file.readline() #reads in line titles
 file.readline()
 i=1
-bar = [re.split('[ ]{2,}', item) for item in file]
-print bar[18]
+data = [re.split('[ ]{2,}', item) for item in file]
+print data[17]
+
+#for line in data:
+    #remove '-------'
+    #data.append([line[1],line[0],line[2]])
