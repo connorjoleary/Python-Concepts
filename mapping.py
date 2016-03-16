@@ -11,7 +11,7 @@ file.readline() #reads in line titles
 file.readline()
 file.readline()
 for line in file:
-	clean = re.match('(\w+\s+)+(\d+)', line)
+	clean = re.match('(\w+\s\w*\s\w*)\s+(\w+\s\w*\s\w*)\s+(\d+)', line)
 	if clean:
-		print(clean.group(1))
+		print(clean.groups())
 file.close()
