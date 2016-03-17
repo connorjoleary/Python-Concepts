@@ -13,18 +13,19 @@ file.readline()
 for line in file:
 	clean = re.match('(\w+\s\w*\s\w*)\s+(\w+\s\w*\s\w*)\s+(\d+)', line)
 	if clean:
-		#print(clean.group(1))
+		if clean.group(2) not in final_map:
+			final_map[clean.group(2)] = {clean.group(1) : clean.group(3)}
 		if clean.group(1) not in final_map:
 			final_map[clean.group(1)] = {clean.group(2) : clean.group(3)}
 		else:
 			final_map[clean.group(1)].update({clean.group(2) : clean.group(3)})
+			final_map[clean.group(2)].update({clean.group(1) : clean.group(3)})
 file.close()
-
+#print(final_map["  "])
 def task_1(city):
 	i = 0
-	for node in final_map[city]:
-		if node != city: 
-			i += 1;
+	for node in final_map[city]: 
+		i += 1;
 	print(i)
 #this works
 task_1("Bozeman  ")
@@ -48,7 +49,6 @@ def find_path(start, end, path=[]):
 		if node not in path:
 			newpath = find_path(node, end, path)
 			if newpath:
-				print(newpath)
 				return newpath
 	return None
 
