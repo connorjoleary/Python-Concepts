@@ -15,41 +15,41 @@ for line in file:
 	if clean:
 		#print(clean.group(1))
 		if clean.group(1) not in final_map:
-			final_map[clean.group(1)] = list()
+			final_map[clean.group(1)] = {clean.group(2) : clean.group(3)}
 		else:
-			final_map[clean.group(1)].append(clean.group(2))
+			final_map[clean.group(1)].update({clean.group(2) : clean.group(3)})
 file.close()
-#for debugging
-"""
-l = sorted(final_map.keys())
-for i in l:
-	print(i)
-"""
-def task_1(graph, city):
+
+def task_1(city):
 	i = 0
-	for node in graph[city]:
-		i += 1;
+	for node in final_map[city]:
+		if node != city: 
+			i += 1;
 	print(i)
 #this works
-task_1(final_map, "Bozeman  ")
+task_1("Bozeman  ")
 
-def task_2(graph, city1, city2):
-	if city2 in graph[city1]:
+def task_2(city1, city2):
+	if city2 in final_map[city1]:
 		print("Yes")
 	else:
 		print("No")
 #this works
-task_2(final_map, "Bozeman  ", "Billings  ")
+task_2("Bozeman  ", "Billings  ")
 
 #Task 4 is below function
-def find_path(graph, start, end, path = []):
+def find_path(start, end, path=[]):
+	path = path + [start]
 	if start == end:
 		return path
-	if not graph.has_key(start):
+	if start not in final_map:
 		return None
-	for node in graph[start]:
+	for node in final_map[start]:
 		if node not in path:
-			newpath = find_path(graph, node, end, path)
+			newpath = find_path(node, end, path)
 			if newpath:
+				print(newpath)
 				return newpath
 	return None
+
+print(find_path("Bozeman  ", "Billings  "))
