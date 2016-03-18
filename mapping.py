@@ -13,13 +13,13 @@ file.readline()
 for line in file:
 	clean = re.match('(\w+\s\w*\s\w*)\s+(\w+\s\w*\s\w*)\s+(\d+)', line)
 	if clean:
-		if clean.group(2) not in final_map:
-			final_map[clean.group(2)] = {clean.group(1) : clean.group(3)}
-		if clean.group(1) not in final_map:
-			final_map[clean.group(1)] = {clean.group(2) : clean.group(3)}
+		if clean.group(2).rstrip() not in final_map:
+			final_map[clean.group(2).rstrip()] = {clean.group(1).rstrip() : clean.group(3).rstrip()}
+		if clean.group(1).rstrip() not in final_map:
+			final_map[clean.group(1).rstrip()] = {clean.group(2).rstrip() : clean.group(3).rstrip()}
 		else:
-			final_map[clean.group(1)].update({clean.group(2) : clean.group(3)})
-			final_map[clean.group(2)].update({clean.group(1) : clean.group(3)})
+			final_map[clean.group(1).rstrip()].update({clean.group(2).rstrip() : clean.group(3).rstrip()})
+			final_map[clean.group(2).rstrip()].update({clean.group(1).rstrip() : clean.group(3).rstrip()})
 file.close()
 #print(final_map["  "])
 def task_1(city):
