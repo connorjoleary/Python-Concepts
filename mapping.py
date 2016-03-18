@@ -13,44 +13,61 @@ file.readline()
 for line in file:
 	clean = re.match('(\w+\s\w*\s\w*)\s+(\w+\s\w*\s\w*)\s+(\d+)', line)
 	if clean:
-		#print(clean.group(1))
+		if clean.group(2) not in final_map:
+			final_map[clean.group(2)] = {clean.group(1) : clean.group(3)}
 		if clean.group(1) not in final_map:
-			final_map[clean.group(1)] = list()
+			final_map[clean.group(1)] = {clean.group(2) : clean.group(3)}
 		else:
-			final_map[clean.group(1)].append(clean.group(2))
+			final_map[clean.group(1)].update({clean.group(2) : clean.group(3)})
+			final_map[clean.group(2)].update({clean.group(1) : clean.group(3)})
 file.close()
-#for debugging
-"""
-l = sorted(final_map.keys())
-for i in l:
-	print(i)
-"""
-print final_map
-def task_1(graph, city):
+#print(final_map["  "])
+def task_1(city):
 	i = 0
-	for node in graph[city]:
+	for node in final_map[city]: 
 		i += 1;
 	print(i)
 #this works
-task_1(final_map, "Bozeman  ")
+task_1("Bozeman  ")
 
-def task_2(graph, city1, city2):
-	if city2 in graph[city1]:
+def task_2(city1, city2):
+	if city2 in final_map[city1]:
 		print("Yes")
 	else:
 		print("No")
 #this works
-task_2(final_map, "Bozeman  ", "Billings  ")
-
-#Task 4 is below function
-def find_path(graph, start, end, path = []):
+task_2("Bozeman  ", "Billings  ")
+#Task 3 is below function
+def find_connections(start, end, d, path=[]):
+	path = path + [start]
 	if start == end:
 		return path
-	if not graph.has_key(start):
+	if start not in final_map:
 		return None
-	for node in graph[start]:
+	for node in final_map[start]:
 		if node not in path:
-			newpath = find_path(graph, node, end, path)
+			newpath = find_path(node, end, path)
 			if newpath:
 				return newpath
 	return None
+
+#Task 4 is below function
+def find_path(start, end, path=[]):
+	path = path + [start]
+	if start == end:
+		return path
+	if start not in final_map:
+		return None
+	for node in final_map[start]:
+		if node not in path:
+			newpath = find_path(node, end, path)
+			if newpath:
+				return newpath
+	return None
+d = 0
+path = find_path('Bozeman  ', 'Billings  ')
+for index in range(len(path)):
+	if index >= 1:
+		d += int(final_map[path[index-1]][path[index]])
+print(path)
+print(d)
