@@ -37,6 +37,19 @@ def task_2(city1, city2):
 		print("No")
 #this works
 task_2("Bozeman  ", "Billings  ")
+#Task 3 is below function
+def find_connections(start, end, d, path=[]):
+	path = path + [start]
+	if start == end:
+		return path
+	if start not in final_map:
+		return None
+	for node in final_map[start]:
+		if node not in path:
+			newpath = find_path(node, end, path)
+			if newpath:
+				return newpath
+	return None
 
 #Task 4 is below function
 def find_path(start, end, path=[]):
@@ -51,5 +64,11 @@ def find_path(start, end, path=[]):
 			if newpath:
 				return newpath
 	return None
+d = 0
+path = find_path('Bozeman  ', 'Billings  ')
+for index in range(len(path)):
+	if index >= 1:
+		d += int(final_map[path[index-1]][path[index]])
+print(path)
+print(d)
 
-print(find_path("Bozeman  ", "Billings  "))
