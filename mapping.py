@@ -28,7 +28,9 @@ def task_1(city):
 		i += 1;
 	print(i)
 #this works
-task_1("Bozeman  ")
+print 'task 1'
+city = raw_input('Enter the city: ')
+task_1(city)
 
 def task_2(city1, city2):
 	if city2 in final_map[city1]:
@@ -36,7 +38,11 @@ def task_2(city1, city2):
 	else:
 		print("No")
 #this works
-task_2("Bozeman  ", "Billings  ")
+
+print 'task 2'
+city1 = raw_input('Enter the city: ')
+city2 = raw_input('Enter the city: ')
+task_2(city1, city2)
 #Task 3 is below function
 def find_connections(start, end, d, path=[]):
 	path = path + [start]
